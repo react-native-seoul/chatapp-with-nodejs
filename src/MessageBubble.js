@@ -22,6 +22,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     padding: 24
   },
+  bubbleTextContainerHighlighted: {
+    backgroundColor: "#EEEEEE"
+  },
   profileImage: {
     height: 45,
     width: 45
@@ -54,7 +57,12 @@ class MessageBubble extends Component {
             style={styles.profileImage}
           />
         )}
-        <View style={styles.bubbleTextContainer}>
+        <View
+          style={[
+            styles.bubbleTextContainer,
+            this.props.highlighted && styles.bubbleTextContainerHighlighted
+          ]}
+        >
           <Text>{this.props.body}</Text>
           <Text
             style={[

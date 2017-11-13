@@ -56,9 +56,10 @@ class ChatRoom extends Component {
   renderItem = ({ item }) => {
     return (
       <MessageBubble
-        body={item.body}
-        time={item.time}
         alignToRight={item.senderID === USER_ID}
+        body={item.body}
+        highlighted={item.senderID === USER_ID}
+        time={item.time}
       />
     );
   };
