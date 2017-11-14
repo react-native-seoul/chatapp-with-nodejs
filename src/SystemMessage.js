@@ -6,13 +6,15 @@ const styles = StyleSheet.create({
   systemMessage: {
     alignItems: "center",
     justifyContent: "center",
-    flexDirection: "row",
     paddingVertical: 32
   },
   systemMessageText: {
     color: "#FFFFFF",
     fontSize: 13,
     fontWeight: "700"
+  },
+  timeContainer: {
+    flexDirection: "row"
   },
   icon: {
     marginRight: 4
@@ -23,8 +25,14 @@ class SystemMessage extends Component {
   render() {
     return (
       <View style={styles.systemMessage}>
-        <Icon color="#FFFFFF" name="alarm" size={14} style={styles.icon} />
-        <Text style={styles.systemMessageText}>TODAY AT 10:45 AM</Text>
+        <Text style={styles.systemMessageText}>
+          {this.props.body.toUpperCase()}
+        </Text>
+
+        <View style={styles.timeContainer}>
+          <Icon color="#FFFFFF" name="alarm" size={14} style={styles.icon} />
+          <Text style={styles.systemMessageText}>{this.props.time}</Text>
+        </View>
       </View>
     );
   }

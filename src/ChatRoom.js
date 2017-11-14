@@ -24,15 +24,24 @@ const USER_ID = "andrea";
 const messages = [
   {
     id: "1",
-    body: "Hi, Andrea! How are you doing?",
+    body: "Chat has started!",
     time: "5 minutes ago",
-    senderID: "michael"
+    senderID: "system",
+    type: "system"
   },
   {
     id: "2",
+    body: "Hi, Andrea! How are you doing?",
+    time: "5 minutes ago",
+    senderID: "michael",
+    type: "user"
+  },
+  {
+    id: "3",
     body: "Doing good! Thanks!",
     time: "4 minutes ago",
-    senderID: "andrea"
+    senderID: "andrea",
+    type: "user"
   }
 ];
 
@@ -40,8 +49,6 @@ class ChatRoom extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <SystemMessage />
-
         <FlatList
           data={messages}
           keyExtractor={this.keyExtractor}
@@ -54,6 +61,10 @@ class ChatRoom extends Component {
   keyExtractor = item => item.id;
 
   renderItem = ({ item }) => {
+    if (item.type === "system") {
+      return <SystemMessage body={item.body} time={item.time} />;
+    }
+
     return (
       <MessageBubble
         alignToRight={item.senderID === USER_ID}
