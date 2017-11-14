@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  KeyboardAvoidingView,
   FlatList,
   Image,
   StatusBar,
@@ -10,10 +11,14 @@ import {
 
 import SystemMessage from "./SystemMessage";
 import MessageBubble from "./MessageBubble";
+import ChatRoomInput from "./ChatRoomInput";
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#1BA2FB",
+    flex: 1
+  },
+  flatListContainer: {
     flex: 1,
     paddingHorizontal: 16
   }
@@ -48,13 +53,16 @@ const messages = [
 class ChatRoom extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <FlatList
-          data={messages}
-          keyExtractor={this.keyExtractor}
-          renderItem={this.renderItem}
-        />
-      </View>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <View style={styles.flatListContainer}>
+          <FlatList
+            data={messages}
+            keyExtractor={this.keyExtractor}
+            renderItem={this.renderItem}
+          />
+        </View>
+        <ChatRoomInput />
+      </KeyboardAvoidingView>
     );
   }
 
