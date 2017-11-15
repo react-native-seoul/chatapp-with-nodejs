@@ -40,7 +40,13 @@ class ChatRoomList extends Component {
   }
 
   renderItem = ({ item }) => {
-    return <ChatRoomListItem name={item.name} time={item.time} />;
+    return (
+      <ChatRoomListItem
+        name={item.name}
+        navigator={this.props.navigator}
+        time={item.time}
+      />
+    );
   };
 }
 
