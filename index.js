@@ -8,7 +8,7 @@ registerScreens(); // this is where you register all of your app's screens
 
 Navigation.startSingleScreenApp({
   screen: {
-    screen: "chat.ChatRoomScreen",
-    title: "Chat"
+    screen: "chat.ChatRoomList",
+    title: "ChatRoomList"
   }
 });
