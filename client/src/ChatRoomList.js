@@ -3,24 +3,6 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 
 import ChatRoomListItem from "./ChatRoomListItem";
 
-const data = [
-  {
-    key: "1",
-    name: "Ana Jacobson",
-    time: "5 minutes"
-  },
-  {
-    key: "2",
-    name: "Michel Shelton",
-    time: "3 minutes"
-  },
-  {
-    key: "3",
-    name: "Todd Fisher",
-    time: "5 minutes"
-  }
-];
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -31,10 +13,31 @@ const styles = StyleSheet.create({
 });
 
 class ChatRoomList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      chatRooms: []
+    };
+  }
+
+  componentDidMount() {
+    fetch("http://localhost:3000/chat-rooms")
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        this.setState({ chatRooms: response.body });
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <FlatList data={data} renderItem={this.renderItem} />
+        <FlatList data={this.state.chatRooms} renderItem={this.renderItem} />
       </View>
     );
   }
