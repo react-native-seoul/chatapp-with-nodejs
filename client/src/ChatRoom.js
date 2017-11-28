@@ -28,11 +28,11 @@ const USER_ID = "andrea";
 
 const messages = [
   {
-    id: "1",
-    body: "Chat has started!",
-    time: "5 minutes ago",
-    senderID: "system",
-    type: "system"
+    id: "3",
+    body: "Doing good! Thanks!",
+    time: "4 minutes ago",
+    senderID: "andrea",
+    type: "user"
   },
   {
     id: "2",
@@ -42,12 +42,12 @@ const messages = [
     type: "user"
   },
   {
-    id: "3",
-    body: "Doing good! Thanks!",
-    time: "4 minutes ago",
-    senderID: "andrea",
-    type: "user"
-  }
+    id: "1",
+    body: "Chat has started!",
+    time: "5 minutes ago",
+    senderID: "system",
+    type: "system"
+  },
 ];
 
 class ChatRoom extends Component {
@@ -85,10 +85,15 @@ class ChatRoom extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+      <KeyboardAvoidingView
+        behavior="padding"
+        keyboardVerticalOffset={60}
+        style={styles.container}
+      >
         <View style={styles.flatListContainer}>
           <FlatList
             data={this.state.messages}
+            inverted={true}
             keyExtractor={this.keyExtractor}
             renderItem={this.renderItem}
           />
@@ -117,7 +122,7 @@ class ChatRoom extends Component {
 
   addNewMessage = (message) => {
     this.setState((prevState) => {
-      const newMessages = [...prevState.messages, message];
+      const newMessages = [message, ...prevState.messages];
 
       return { messages: newMessages };
     });
