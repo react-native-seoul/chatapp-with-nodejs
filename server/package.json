@@ -2,5 +2,11 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^3.3.2"
+  },
+  "scripts": {
+    "start": "node ./index.js"
+  }
 }

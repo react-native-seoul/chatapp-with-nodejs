@@ -34,3 +34,17 @@ server.listen(port, (err) => {
 
   console.log(`server is listening on ${port}`);
 });
+
+const WebSocketServer = require('ws').Server;
+const wss = new WebSocketServer({ port: 8000 });
+
+wss.on('connection', function(ws) {
+  console.log('connected!');
+
+  ws.on('message', function(message) {
+    console.log('received: %s', message);
+    ws.send(JSON.stringify({ body: `You said: ${message}` }));
+  });
+
+  ws.send(JSON.stringify({ body: 'Hello World!' }));
+});
