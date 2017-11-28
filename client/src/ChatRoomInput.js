@@ -24,20 +24,40 @@ const styles = StyleSheet.create({
 });
 
 class ChatRoomInput extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      text: ''
+    }
+  }
+
   render() {
     return (
       <View>
         <TextInput
+          onChangeText={this.setText}
+          onSubmitEditing={this.submit}
           placeholder="Type message ..."
           placeholderTextColor="#DDDDDD"
           style={styles.textInput}
+          value={this.state.text}
         />
 
-        <TouchableOpacity style={styles.sendButton}>
+        <TouchableOpacity style={styles.sendButton} onPress={this.submit}>
           <Icon name="send" color="#000000" size={26} />
         </TouchableOpacity>
       </View>
     );
+  }
+
+  setText = (text) => {
+    this.setState({ text });
+  }
+
+  submit = () => {
+    this.props.onSubmit(this.state.text);
+    this.setState({ text: '' });
   }
 }
 

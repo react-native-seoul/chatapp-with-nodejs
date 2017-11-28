@@ -51,19 +51,76 @@ const messages = [
 ];
 
 class ChatRoom extends Component {
+  ws;
+  isSocketOpen = false;
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      messages
+    };
+  }
+
+  componentDidMount() {
+    this.ws = new WebSocket("ws://localhost:8000");
+
+    this.ws.onopen = () => {
+      this.isSocketOpen = true;
+    };
+
+    this.ws.onmessage = event => {
+      const data = JSON.parse(event.data);
+      const message = {
+        id: Math.random().toString(),
+        body: data.body,
+        senderID: "michael",
+        time: "5 minutes ago",
+        type: "user"
+      }
+
+      this.addNewMessage(message);
+    };
+  }
+
   render() {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <View style={styles.flatListContainer}>
           <FlatList
-            data={messages}
+            data={this.state.messages}
             keyExtractor={this.keyExtractor}
             renderItem={this.renderItem}
           />
         </View>
-        <ChatRoomInput />
+
+        <ChatRoomInput onSubmit={this.submit} />
       </KeyboardAvoidingView>
     );
+  }
+
+  submit = (text) => {
+    const message = {
+      id: Math.random().toString(),
+      body: text,
+      senderID: "andrea",
+      time: "5 minutes ago",
+      type: "user"
+    }
+
+    this.addNewMessage(message);
+
+    if (this.isSocketOpen) {
+      this.ws.send(text);
+    }
+  }
+
+  addNewMessage = (message) => {
+    this.setState((prevState) => {
+      const newMessages = [...prevState.messages, message];
+
+      return { messages: newMessages };
+    });
   }
 
   keyExtractor = item => item.id;
